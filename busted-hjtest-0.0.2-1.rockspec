@@ -1,8 +1,8 @@
 package = "busted-hjtest"
-version = "0.0.1-2"
+version = "0.0.2-1"
 source = {
    url = "git://github.com/kong/busted-hjtest",
-   tag = "0.0.1-2"
+   tag = "0.0.2-1"
 }
 description = {
    summary = "The busted output handler that conbine htest and junit.",

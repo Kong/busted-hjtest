@@ -76,7 +76,7 @@ do
     setmetatable(junit_handler, { __index = base_handler })
     junit_handler.options = options
 
-    output_file_name = options[1] or 'report.xml'
+    output_file_name = options.arguments[1] or 'report.xml'
 
     top = {
       start_tick = busted.monotime(),
