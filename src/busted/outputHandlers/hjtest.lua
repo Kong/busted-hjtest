@@ -545,7 +545,7 @@ return function(options)
   end
 
   handler.suiteEnd = function(suite, count, total)
-    htest_handler.suiteStart(suite, count, total)
+    htest_handler.suiteEnd(suite, count, total)
     junit_handler.suiteEnd(suite, count, total)
     return nil, true
   end
