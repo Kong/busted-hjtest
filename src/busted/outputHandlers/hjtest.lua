@@ -186,13 +186,13 @@ do
     return nil, true
   end
 
-  junit_handler.failureTest = function(element, parent, message, trace)
+  junit_handler.testFailure = function(element, parent, message, trace)
     top.xml_doc.attr.failures = top.xml_doc.attr.failures + 1
     testStatus(element, parent, message, 'failure', trace)
     return nil, true
   end
 
-  junit_handler.errorTest = function(element, parent, message, trace)
+  junit_handler.testError = function(element, parent, message, trace)
     top.xml_doc.attr.errors = top.xml_doc.attr.errors + 1
     testStatus(element, parent, message, 'error', trace)
     return nil, true
@@ -536,6 +536,7 @@ return function(options)
 
   handler.suiteReset = function()
     htest_handler.suiteReset()
+    return nil, true
   end
 
   handler.suiteStart = function(suite, count, total, randomseed)
@@ -574,20 +575,13 @@ return function(options)
 
   handler.testFailure = function(element, parent, message, debug)
     htest_handler.testFailure(element, parent, message, debug)
+    junit_handler.testFailure(element, parent, message, debug)
     return nil, true
   end
 
   handler.testError = function(element, parent, message, debug)
     htest_handler.testError(element, parent, message, debug)
-    return nil, true
-  end
-
-  handler.failureTest = function(element, parent, message, trace)
-    junit_handler.failureTest(element, parent, message, trace)
-  end
-
-  handler.errorTest = function(element, parent, message, trace)
-    junit_handler.errorTest(element, parent, message, trace)
+    junit_handler.testError(element, parent, message, debug)
     return nil, true
   end
 
@@ -611,8 +605,6 @@ return function(options)
   busted.subscribe({ 'test', 'end' }, handler.testEnd, { predicate = handler.cancelOnPending })
   busted.subscribe({ 'failure', 'it' }, handler.testFailure)
   busted.subscribe({ 'error', 'it' }, handler.testError)
-  busted.subscribe({ 'failure', 'describe' }, handler.failureTest)
-  busted.subscribe({ 'error', 'describe' }, handler.errorTest)
   busted.subscribe({ 'failure' }, handler.error)
   busted.subscribe({ 'error' }, handler.error)
   busted.subscribe({ 'exit' }, handler.exit)
