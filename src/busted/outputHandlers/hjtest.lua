@@ -163,6 +163,7 @@ do
   junit_handler.testStart = function(element, parent)
     testcase_node = xml.new('testcase', {
       classname = element.trace.short_src .. ':' .. element.trace.currentline,
+      filename = element.trace.short_src,
       name = junit_handler.getFullName(element),
     })
     top.xml_doc:add_direct_child(testcase_node)
